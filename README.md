@@ -18,7 +18,6 @@ or, if using pnpm:
 pnpm add vite-plugin-override-deps -D
 ```
 
----
 
 ## Usage
 
