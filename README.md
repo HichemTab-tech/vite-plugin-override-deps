@@ -1,110 +1,61 @@
 # Override deps at runtime
 
-*A short but clear description of your package. Explain what it does, why it’s useful, and in what context it should be used.*
+> 🧩 Intercept and override dependencies at build-time with Vite.
 
----
+A lightweight Vite plugin that lets you **replace, extend,
+or patch libraries** (like React, Zustand, etc.) using custom virtual modules —
+without forking or touching `node_modules`.
 
-## 🚀 Getting Started
-
-Start by installing the package via your preferred package manager:
+## Getting Started
 
 ```sh
-npm install vite-plugin-override-deps
+npm install vite-plugin-override-deps -D
 ```
 
 or, if using pnpm:
 
 ```sh
-pnpm add vite-plugin-override-deps
+pnpm add vite-plugin-override-deps -D
 ```
 
 ---
-
-## ☕ 60-Second TL;DR
-
-Show a minimal but practical example that someone can copy-paste to immediately see results:
-
-```javascript
-import { exampleFunction } from 'vite-plugin-override-deps';
-
-export default function Demo() {
-  const result = exampleFunction('Hello');
-  return <div>{result}</div>;
-}
-```
 
 ## Usage
 
-Provide a more detailed usage example:
+Add the plugin to your `vite.config.ts`:
 
-```javascript
-import { exampleFunction } from 'vite-plugin-override-deps';
+```ts
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import overrideDeps from "vite-plugin-override-deps";
 
-function Example() {
-  // Default behavior
-  const output = exampleFunction({ name: 'Alice' });
-
-  // With a custom identifier
-  const custom = exampleFunction(42, 'myKey');
-
-  return (
-    <div>
-      <p>{output}</p>
-      <p>{custom}</p>
-    </div>
-  );
-}
+export default defineConfig({
+  plugins: [
+    react(),
+    overrideDeps({
+      targets: [
+        {
+          package: "react",
+          overrides: {
+            useMemo: (o) => `(...args) => {
+              console.log("Custom useMemo!");
+              return ${o}.useMemo(...args);
+            }`
+          }
+        }
+      ]
+    })
+  ]
+});
 ```
 
----
+Now every import from `"react"` will be rewritten to a virtual version that exports all React APIs but uses your custom `useMemo`.
 
-## API Reference
+## Why
 
-### Function `exampleFunction(args)`
+* Patch libraries without forking
+* Log or instrument internal behavior
 
-Description of what this function/method does and how to use it.
-
-**Parameters:**
-
-| Parameter   | Type   | Description                        |
-|-------------|--------|------------------------------------|
-| `args`      | any    | Description of the arguments.      |
-
-**Returns:**
-
-- Type: `any`
-Briefly describe the returned value or output.
-
-**Example:**
-
-```javascript
-import { exampleFunction } from 'vite-plugin-override-deps';
-
-const result = exampleFunction('Hello, world!');
-console.log(result);
-```
-
----
-
-## 🤝 Contributions
-
-Contributions are welcome! Feel free to:
-
-1. Fork the repository
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-Please follow existing coding styles and clearly state your changes in the pull request.
-
-## ❓ FAQ
-
-**Question 1**
-Answer.
-
-**Question 2**
-Answer.
 
 ## Issues
 

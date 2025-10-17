@@ -26,9 +26,9 @@ export default defineConfig({
                 {
                     package: "react",
                     overrides: {
-                        useEffect: `(...args) => {
+                        useEffect: (o) => `(...args) => {
                             console.log("patched useEffect");
-                            return original.useEffect(...args);
+                            return ${o}.useEffect(...args);
                         };`
                     }
                 }
