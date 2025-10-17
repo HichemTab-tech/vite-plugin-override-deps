@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "%PACKAGE-NAME%": ["../src"]
+      "vite-plugin-override-deps": ["../src"]
     },
     "rootDir": "../"
   },
