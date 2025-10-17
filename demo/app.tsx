@@ -1,15 +1,16 @@
 import * as React from 'react';
+import {useEffect} from "react";
 //import {GiveHichemTabTechCredit, MyComponent} from '../dist/main.js'; // Import your built library
-import {GiveHichemTabTechCredit, MyComponent} from 'vite-plugin-override-deps'; // Import your dev library
 
 const App = () => {
 
-    GiveHichemTabTechCredit();
+    useEffect(() => {
+        console.log("useEffect");
+    }, []);
 
     return (
         <div>
             <h1 className="text-red-600">Override deps at runtime Demo</h1>
-            <MyComponent/>
         </div>
     );
 };

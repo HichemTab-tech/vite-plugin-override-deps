@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { resolve } from 'path';
+import {overrideDeps} from "vite-plugin-override-deps";
 
 export default defineConfig({
     root: 'demo', // Set the root directory to the demo folder
@@ -20,5 +21,18 @@ export default defineConfig({
     plugins: [
         react(),
         tailwindcss(),
+        overrideDeps({
+            targets: [
+                {
+                    package: "react",
+                    overrides: {
+                        useEffect: `(...args) => {
+                            console.log("patched useEffect");
+                            return original.useEffect(...args);
+                        };`
+                    }
+                }
+            ]
+        })
     ],
 });
