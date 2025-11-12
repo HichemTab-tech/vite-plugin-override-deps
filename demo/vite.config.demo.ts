@@ -19,8 +19,6 @@ export default defineConfig({
         port: 5021
     },
     plugins: [
-        react(),
-        tailwindcss(),
         overrideDeps({
             targets: [
                 {
@@ -33,6 +31,8 @@ export default defineConfig({
                     }
                 }
             ]
-        })
+        }),
+        react(),
+        tailwindcss(),
     ],
 });

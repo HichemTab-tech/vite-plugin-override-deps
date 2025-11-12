@@ -26,11 +26,10 @@ Add the plugin to your `vite.config.ts`:
 ```ts
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import overrideDeps from "vite-plugin-override-deps";
+import {overrideDeps} from "vite-plugin-override-deps";
 
 export default defineConfig({
   plugins: [
-    react(),
     overrideDeps({
       targets: [
         {
@@ -43,7 +42,8 @@ export default defineConfig({
           }
         }
       ]
-    })
+    }),
+    react(),
   ]
 });
 ```
